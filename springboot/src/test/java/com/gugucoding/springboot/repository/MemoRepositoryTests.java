@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 
 import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
@@ -124,6 +125,15 @@ public class MemoRepositoryTests {
         result.get().forEach(memo -> System.out.println(memo));
 
     }
+
+    @Commit
+    @Transactional
+    @Test
+    public void testDeleteQueryMethods() {
+
+        memoRepository.deleteMemoByMnoLessThan(10L);
+    }
+
 
 
 }
