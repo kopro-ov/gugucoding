@@ -82,6 +82,14 @@ public class MemoRepositoryTests {
         Page<Memo> result  = memoRepository.findAll(pageable);
         System.out.println(result);
 
+        System.out.println("-----------------------");
+        System.out.println("Total Pages : "+result.getTotalPages()); //총 몇페이지
+        System.out.println("Total Count : "+result.getTotalElements()); //전체 개수
+        System.out.println("Page Number : "+result.getNumber()); //현재 페이지 번호
+        System.out.println("Page Size : "+result.getSize()); //페이지 데이터 개수
+        System.out.println("has next page ? : "+result.hasNext()); //다음 페이지 존재 여부
+        System.out.println("first page ? : "+result.isFirst()); //시작 페이지 (0) 여부
+
     }
 
 
