@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
@@ -90,6 +91,18 @@ public class MemoRepositoryTests {
         System.out.println("has next page ? : "+result.hasNext()); //다음 페이지 존재 여부
         System.out.println("first page ? : "+result.isFirst()); //시작 페이지 (0) 여부
 
+    }
+
+    @Test
+    public void testSort() {
+
+        Sort sort1 = Sort.by("mno").descending();
+        Pageable pageable = PageRequest.of(0, 10, sort1);
+        Page<Memo> result = memoRepository.findAll(pageable);
+
+        result.get().forEach(memo -> {
+            System.out.println(memo);
+        });
     }
 
 
