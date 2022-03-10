@@ -24,9 +24,6 @@ public class GuestbookRepositoryTests {
     @Autowired
     private GuestbookRepository guestbookRepository;
 
-    @Autowired
-    private GuestbookService guestbookService;
-
     @Test
     public void insertDummies() {
         IntStream.rangeClosed(1, 300).forEach(i -> {
@@ -82,33 +79,6 @@ public class GuestbookRepositoryTests {
         result.stream().forEach(guestbook -> {
             System.out.println(guestbook);
         });
-
-    }
-
-    @Test
-    public void testRegister() {
-
-        GuestbookDTO guestbookDTO = GuestbookDTO.builder()
-                .title("Sample Title")
-                .content("Sample Content ... ")
-                .writer("user0")
-                .build();
-
-        System.out.println(guestbookService.register(guestbookDTO));
-
-    }
-
-    @Test
-    public void testList() {
-
-        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(1).size(10).build();
-
-        PageResultDTO<GuestbookDTO, Guestbook> resultDTO = guestbookService.getList(pageRequestDTO);
-
-        for (GuestbookDTO guestbookDTO : resultDTO.getDtoList()) {
-            System.out.println(guestbookDTO);
-        }
-
 
     }
 
