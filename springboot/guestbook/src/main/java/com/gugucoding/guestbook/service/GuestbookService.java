@@ -1,11 +1,15 @@
 package com.gugucoding.guestbook.service;
 
 import com.gugucoding.guestbook.dto.GuestbookDTO;
+import com.gugucoding.guestbook.dto.PageRequestDTO;
+import com.gugucoding.guestbook.dto.PageResultDTO;
 import com.gugucoding.guestbook.entity.Guestbook;
 
 public interface GuestbookService {
 
     Long register(GuestbookDTO guestbookDTO);
+
+    PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO);
 
     default Guestbook dtoToEntity(GuestbookDTO dto) {
         Guestbook entity = Guestbook.builder()
@@ -17,5 +21,16 @@ public interface GuestbookService {
         return entity;
     }
 
+    default GuestbookDTO entityToDto(Guestbook entity) {
+        GuestbookDTO dto = GuestbookDTO.builder()
+                .gno(entity.getGno())
+                .title(entity.getTitle())
+                .content(entity.getContent())
+                .writer(entity.getWriter())
+                .regDate(entity.getRegDate())
+                .modDate(entity.getModDate())
+                .build();
+        return dto;
+    }
 
 }
