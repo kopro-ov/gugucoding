@@ -1,7 +1,9 @@
 package com.gugucoding.guestbook.repository;
 
+import com.gugucoding.guestbook.dto.GuestbookDTO;
 import com.gugucoding.guestbook.entity.Guestbook;
 import com.gugucoding.guestbook.entity.QGuestbook;
+import com.gugucoding.guestbook.service.GuestbookService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.junit.jupiter.api.Test;
@@ -19,6 +21,9 @@ public class GuestbookRepositoryTests {
 
     @Autowired
     private GuestbookRepository guestbookRepository;
+
+    @Autowired
+    private GuestbookService guestbookService;
 
     @Test
     public void insertDummies() {
@@ -76,6 +81,19 @@ public class GuestbookRepositoryTests {
             System.out.println(guestbook);
         });
 
+    }
+
+    @Test
+    public void testRegister() {
+
+        GuestbookDTO guestbookDTO = GuestbookDTO.builder()
+                .title("Sample Title")
+                .content("Sample Content ... ")
+                .writer("user0")
+                .build();
+
+        System.out.println(guestbookService.register(guestbookDTO));
+        ;
     }
 
 }
