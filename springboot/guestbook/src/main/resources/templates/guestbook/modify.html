@@ -40,16 +40,40 @@
                        th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd HH:mm:ss')}" readonly />
             </div>
 
-            <button type="button" class="btn btn-primary">Modify</button>
+            <button type="button" class="btn btn-primary modifyBtn">Modify</button>
 
             <a th:href="@{/guestbook/list(page=${requestDTO.page})}"
                class="btn btn-info">
                 List
             </a>
 
-            <button type="button" class="btn btn-danger">Remove</button>
+            <button type="button" class="btn btn-danger removeBtn">Remove</button>
 
         </form>
+
+        <script>
+            var actionForm = $("form");
+
+            //삭제버튼 이벤트
+            $(".removeBtn").click(function () {
+               actionForm
+                .attr("action", "/guestbook/remove")
+                .attr("method", "post")
+                .submit();
+            });
+
+            //수정버튼 이벤트
+            $(".modifyBtn").click(function() {
+               if(!confirm("수정하시겠습니까?")) {
+                   return;
+               }
+               actionForm
+                .attr("action", "/guestbook/modify")
+                .attr("method", "post")
+                .submit();
+            });
+
+        </script>
 
     </th:block>
 </th:block>
