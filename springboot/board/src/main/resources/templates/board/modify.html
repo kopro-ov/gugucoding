@@ -5,7 +5,7 @@
 
 <th:block th:replace = "~{/layout/basic :: setContent(~{this::content})}">
     <th:block th:fragment="content">
-        <h1>GuestBook Modify Page</h1>
+        <h1>Board Modify Page</h1>
 
         <form th:action="@{/board/modify}" th:method="post">
             <input type="hidden" name="page" th:value="${requestDTO.page}" />
