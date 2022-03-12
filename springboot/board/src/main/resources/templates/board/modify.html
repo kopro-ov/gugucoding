@@ -7,7 +7,7 @@
     <th:block th:fragment="content">
         <h1>GuestBook Modify Page</h1>
 
-        <form th:action="@{/guestbook/modify}" th:method="post">
+        <form th:action="@{/board/modify}" th:method="post">
             <input type="hidden" name="page" th:value="${requestDTO.page}" />
             <input type="hidden" name="type" th:value="${requestDTO.type}" />
             <input type="hidden" name="keyword" th:value="${requestDTO.keyword}" />
@@ -46,7 +46,7 @@
 
             <button type="button" class="btn btn-primary modifyBtn">Modify</button>
 
-            <a th:href="@{/guestbook/list(page=${requestDTO.page},
+            <a th:href="@{/board/list(page=${requestDTO.page},
                 type=${requestDTO.type}, keyword=${requestDTO.keyword})}"
                 class="btn btn-info">
                 List
@@ -62,7 +62,7 @@
             //삭제버튼 이벤트
             $(".removeBtn").click(function () {
                actionForm
-                .attr("action", "/guestbook/remove")
+                .attr("action", "/board/remove")
                 .attr("method", "post")
                 .submit();
             });
@@ -73,7 +73,7 @@
                    return;
                }
                actionForm
-                .attr("action", "/guestbook/modify")
+                .attr("action", "/board/modify")
                 .attr("method", "post")
                 .submit();
             });

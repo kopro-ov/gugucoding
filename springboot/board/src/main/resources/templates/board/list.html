@@ -7,13 +7,13 @@
     <th:block th:fragment="content">
         <h1>GuestBook List Page
             <span>
-                <a th:href="@{/guestbook/register}" class="btn btn-outline-primary">
+                <a th:href="@{/board/register}" class="btn btn-outline-primary">
                     REGISTER
                 </a>
             </span>
         </h1>
 
-        <form th:action="@{/guestbook/list}" th:method="get" id="searchForm">
+        <form th:action="@{/board/list}" th:method="get" id="searchForm">
             <div class="input-group">
                 <input type="hidden" name="page" value="1">
                 <div class="input-group-prepend">
@@ -46,7 +46,7 @@
             <tbody>
             <tr th:each="dto : ${result.dtoList}" >
                 <th scope="row">
-                    <a th:href="@{/guestbook/read(gno = ${dto.gno}, page=${result.page},
+                    <a th:href="@{/board/read(gno = ${dto.gno}, page=${result.page},
                         type=${pageRequestDTO.type},
                         keyword=${pageRequestDTO.keyword})}">
                         [[${dto.gno}]]
@@ -61,13 +61,13 @@
 
         <ul class="pagination h-100 justify-content-center align-items-center">
             <li class="page-item" th:if="${result.prev}">
-                <a class="page-link" th:href="@{/guestbook/list(page=${result.start -1},
+                <a class="page-link" th:href="@{/board/list(page=${result.start -1},
                     type=${pageRequestDTO.type},
                     keyword=${pageRequestDTO.keyword})}" tabindex="-1">Previous</a>
             </li>
 
             <li th:class=" 'page-item' + ${result.page == page ? ' active' : ''}" th:each="page: ${result.pageList}">
-                <a class="page-link" th:href="@{/guestbook/list(page=${page},
+                <a class="page-link" th:href="@{/board/list(page=${page},
                     type=${pageRequestDTO.type},
                     keyword=${pageRequestDTO.keyword})}" >
                     [[${page}]]
@@ -75,7 +75,7 @@
             </li>
 
             <li class="page-item" th:if="${result.next}">
-                <a class="page-link" th:href="@{/guestbook/list(page=${result.end + 1},
+                <a class="page-link" th:href="@{/board/list(page=${result.end + 1},
                     type=${pageRequestDTO.type},
                     keyword=${pageRequestDTO.keyword})}">Next</a>
             </li>
