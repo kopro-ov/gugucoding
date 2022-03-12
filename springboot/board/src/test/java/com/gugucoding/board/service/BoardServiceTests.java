@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
+
 @SpringBootTest
 public class BoardServiceTests {
 
@@ -54,5 +56,16 @@ public class BoardServiceTests {
         boardService.removeWithReplies(bno);
     }
 
+    @Test
+    public void testModify() {
+
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(2L)
+                .title("제목 변경")
+                .content("내용 변경")
+                .build();
+        boardService.modify(boardDTO);
+
+    }
 
 }

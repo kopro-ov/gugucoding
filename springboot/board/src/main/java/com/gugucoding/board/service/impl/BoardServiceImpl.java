@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -56,6 +57,20 @@ public class BoardServiceImpl implements BoardService {
         Object[] arr = (Object[]) result;
 
         return entityToDTO((Board) arr[0], (Member) arr[1], (Long) arr[2]);
+    }
+
+    @Override
+    public void modify(BoardDTO boardDTO) {
+
+        Optional<Board> result = boardRepository.findById(boardDTO.getBno());
+
+        Board board = result.get();
+
+        board.chargeTitle(boardDTO.getTitle());
+        board.chargeContent(boardDTO.getContent());
+
+        boardRepository.save(board);
+
     }
 
     @Transactional
