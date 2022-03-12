@@ -1,12 +1,17 @@
 package com.gugucoding.board.service;
 
 import com.gugucoding.board.dto.BoardDTO;
+import com.gugucoding.board.dto.PageRequestDTO;
+import com.gugucoding.board.dto.PageResultDTO;
 import com.gugucoding.board.entity.Board;
 import com.gugucoding.board.entity.Member;
 
 public interface BoardService {
 
     Long register(BoardDTO dto);
+
+    PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
+
 
     default Board dtoToEntity(BoardDTO dto) {
         Member member = Member.builder().email(dto.getWriterEmail()).build();
