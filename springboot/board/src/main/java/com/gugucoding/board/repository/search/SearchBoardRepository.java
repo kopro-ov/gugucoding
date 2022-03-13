@@ -2,8 +2,8 @@ package com.gugucoding.board.repository.search;
 
 import com.gugucoding.board.entity.Board;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.awt.print.Pageable;
 
 public interface SearchBoardRepository {
 
