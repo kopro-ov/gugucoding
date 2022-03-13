@@ -6,11 +6,12 @@ spring:
     password: 1111
 
   jpa:
-    open-in-view: false
-    generate-ddl: true
     show-sql: true
     hibernate:
       ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
 
   thymeleaf:
     cache: false
