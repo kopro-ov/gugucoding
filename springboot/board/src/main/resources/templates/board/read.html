@@ -114,7 +114,7 @@
                     $('.replyCount').html(" Reply Count " + arr.length);
                     $.each(arr, function (idx, reply) {
                        console.log(reply);
-                       str += '    <div class="card-body" date-rno="'+reply.rno+'"><string>'+reply.rno+'</string>';
+                       str += '    <div class="card-body" data-rno="'+reply.rno+'"><string>'+reply.rno+'</string>';
                        str += '    <h5 class="card-title">'+reply.text+'</h5>';
                        str += '    <h6 class="card-subtitle mb-2 text-muted">'+reply.replyer+'</h6>';
                        str += '    <p class="card-text">'+formatTime(reply.regDate)+'</p>';
@@ -125,52 +125,77 @@
                 });
             }
 
-            $(function() {
-                var bno = [[${dto.bno}]];
-                var modal = $('.modal');
+            var bno = [[${dto.bno}]];
+            var modal = $('.modal');
 
-                $('.replyCount').click(function () {
-                    loadJSONDate();
+            $('.replyList').on('click', '.card-body', function() {
+                var rno = $(this).data('rno');
+                $('input[name="replyText"]').val($(this).find('.card-title').html());
+                $('input[name="replyer"]').val($(this).find('.card-subtitle').html());
+                $('input[name="rno"]').val(rno);
+
+                $('.modal-footer .btn').hide();
+                $('.replyRemove, .replyModify, .replyClose').show();
+
+                modal.modal('show');
+
+            });
+
+            $('.replyCount').click(function () {
+                loadJSONDate(bno);
+            });
+
+            $('.addReply').click(function() {
+               modal.modal('show');
+
+               $('input[name="replyText"]').val('');
+               $('input[name="replyer"]').val('');
+
+               $('.modal-footer .btn').hide();
+               $('.replySave, .replyClose').show();
+
+            });
+
+            $('.replySave').click(function () {
+               var reply = {
+                   bno: bno,
+                   text: $('input[name="replyText"]').val(),
+                   replyer: $('input[name="replyer"]').val()
+               };
+               console.log(reply);
+               $.ajax({
+                  url: '/replies/',
+                  method: 'post',
+                  data: JSON.stringify(reply),
+                  contentType: 'application/json; charset=utf-8',
+                  dataType: 'json',
+                  success: function (data) {
+                      console.log(data);
+
+                      var newRno = parseInt(data);
+
+                      alert(newRno + "번 댓글이 등록되었습니다.")
+                      modal.modal('hide');
+                      loadJSONDate(bno);
+
+                  }
+               });
+            });
+            $('.replyRemove').on('click', function() {
+                var rno = $('input[name="rno"]').val();
+
+                $.ajax({
+                    url: '/replies/' + rno,
+                    method: 'delete',
+                    success: function (result) {
+                        console.log("result: "+result);
+                        if (result === 'success') {
+                            alert('댓글이 삭제되었습니다.');
+                            modal.modal('hide');
+                            loadJSONDate(bno);
+                        }
+                    }
                 });
-
-                $('.addReply').click(function() {
-                   modal.modal('show');
-
-                   $('input[name="replyText"]').val('');
-                   $('input[name="replyer"]').val('');
-
-                   $('.modal-footer .btn').hide();
-                   $('.replySave, .replyClose').show();
-
-                });
-
-                $('.replySave').click(function () {
-                   var reply = {
-                       bno: bno,
-                       text: $('input[name="replyText"]').val(),
-                       replyer: $('input[name="replyer"]').val()
-                   };
-                   console.log(reply);
-                   $.ajax({
-                      url: '/replies/',
-                      method: 'post',
-                      data: JSON.stringify(reply),
-                      contentType: 'application/json; charset=utf-8',
-                      dataType: 'json',
-                      success: function (data) {
-                          console.log(data);
-
-                          var newRno = parseInt(data);
-
-                          alert(newRno + "번 댓글이 등록되었습니다.")
-                          modal.modal('hide');
-                          loadJSONDate(bno);
-
-                      }
-                   });
-
-                });
-
             });
         </script>
     </th:block>
