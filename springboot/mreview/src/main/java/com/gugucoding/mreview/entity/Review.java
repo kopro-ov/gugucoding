@@ -26,4 +26,9 @@ public class Review {
 
     private String text;
 
+    public void update(int grade, String text) {
+        this.grade = grade;
+        this.text = text;
+    }
+
 }
