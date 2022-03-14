@@ -14,7 +14,7 @@ public class MemberRepositoryTests {
     private MemberRepository memberRepository;
 
     @Test
-    public void insertMember() {
+    public void insertMembers() {
 
         IntStream.rangeClosed(1, 100).forEach(i -> {
             Member member = Member.builder()
