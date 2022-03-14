@@ -3,6 +3,7 @@ package com.gugucoding.mreview.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @ToString(exclude = {"moive", "member"})
-public class Review {
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
