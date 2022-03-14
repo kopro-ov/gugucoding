@@ -15,8 +15,7 @@ public class MovieImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "inum")
-    private Long num;
+    private Long inum;
 
     private String uuid;
 

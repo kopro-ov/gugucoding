@@ -24,11 +24,11 @@ public class ReviewRepositoryTests {
             Long mno = (long)(Math.random()*100)+1;
             //리뷰어 번호
             Long mid =  (long)(Math.random()*100)+1;
-            Member member = Member.builder().id(mid).build();
+            Member member = Member.builder().mid(mid).build();
 
             Review movieReview = Review.builder()
                     .member(member)
-                    .movie(Movie.builder().no(mno).build())
+                    .movie(Movie.builder().mno(mno).build())
                     .grade((int)(Math.random()*5)+1)
                     .text("이 영화에 대한...."+i)
                     .build();

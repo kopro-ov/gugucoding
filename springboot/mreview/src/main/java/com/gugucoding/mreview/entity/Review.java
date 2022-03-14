@@ -14,8 +14,7 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reviewnum")
-    private Long num;
+    private Long reviewnum;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Movie movie;
