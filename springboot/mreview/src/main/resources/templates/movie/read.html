@@ -150,7 +150,7 @@
 
                 $('.starrr').starrr({
                    rating: grade,
-                   charge: function (e, value) {
+                   change: function(e, value){
                        if (value) {
                            console.log(value);
                            grade = value;
@@ -209,7 +209,7 @@
                        var str = '';
                        $.each(arr, function (idx, review) {
                           console.log(review);
-                          str += '<div class-"card-body" date-reviewnum="'+review.reviewnum+'" data-mid="'+review.mid+'">';
+                          str += '<div class="card-body" data-reviewnum="'+review.reviewnum+'" data-mid="'+review.mid+'">';
                           str += '<h5 class="card-title">'+review.text+'<span>'+review.grade+'</span></h5>';
                           str += '<h6 class="card-subtitle mb-2 text-muted">'+review.nickname+'</h6>';
                           str += '<p class="card-text">'+formatTime(review.regDate)+'</p>';
@@ -220,6 +220,63 @@
                 }
 
                 getMovieReviews();
+
+                //특정 리뷰 선택하기
+                var reviewnum;
+                $('.reviewList').on('click', '.card-body', function() {
+                   $('.reviewSaveBtn').hide();
+                   $('.reviewRemoveBtn, .reviewModifyBtn').show();
+
+                   var targetReview = $(this);
+                   reviewnum = targetReview.data('reviewnum');
+
+                   console.log('reviewnum: '+reviewnum);
+                   inputMid.val(targetReview.data('mid'));
+                   inputText.val(targetReview.find('.card-title').clone().children().remove().end().text());
+
+                   var grade = targetReview.find('.card-title span').html();
+                   $('.starrr a:nth-child('+grade+')').trigger('click');
+
+                   $('.reviewModal').modal('show');
+
+                });
+
+                $('.reviewModifyBtn').on('click', function () {
+                   var data = {reviewnum: reviewnum, mno:mno, grade:grade, text: inputText.val(), mid: inputMid.val()};
+
+                   console.log(data);
+
+                   $.ajax({
+                      url: '/reviews/'+mno+'/'+reviewnum,
+                      type: 'PUT',
+                      data: JSON.stringify(data),
+                      contentType: 'application/json; charset=utf-8',
+                      dataType: 'text',
+                      success: function (result) {
+                          console.log('result : '+result);
+                          self.location.reload();
+                      }
+                   });
+
+                   reviewModal.modal('hide');
+
+                });
+
+                $('.reviewRemoveBtn').on('click', function () {
+
+                    $.ajax({
+                        url:'/reviews/'+mno+'/'+reviewnum,
+                        type:'DELETE',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType:'text',
+                        success: function (result) {
+                            console.log('result : '+result);
+                            self.location.reload();
+                        }
+                    });
+
+                    reviewModal.modal('hide');
+                });
 
             });
         </script>

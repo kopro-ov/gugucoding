@@ -46,7 +46,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         if (result.isPresent()) {
             Review movieReview = result.get();
-            movieReview.update(movieReviewDTO.getGrade(), movieReview.getText());
+            movieReview.update(movieReviewDTO.getGrade(), movieReviewDTO.getText());
 
             reviewRepository.save(movieReview);
         }
