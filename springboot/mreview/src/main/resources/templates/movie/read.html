@@ -68,6 +68,14 @@
             </span>
         </button>
 
+        <button type="button" class="btn btn-info addReviewBtn">
+            Review Register
+        </button>
+
+        <div class="list-group reviewList">
+
+        </div>
+
         <a th:href="@{/templates/movie/modify(mno = ${dto.mno}, page=${requestDTO.page},
             type=${requestDTO.type}, keyword=${requestDTO.keyword})}"
             class="btn btn-primary">
@@ -80,11 +88,11 @@
             List
         </a>
 
-        <div class="modal" tabindex="-1" role="dialog">
+        <div class="reviewModal modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal Title</h5>
+                        <h5 class="modal-title">Movie Review</h5>
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -92,25 +100,79 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <input class="form-control" type="text" name="replyText" placeholder="Reply Text...." />
+                            <input class="form-control" type="text" name="mid" placeholder="Reviewer ID" />
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="text" name="replyer" placeholder="Replyer" />
-                            <input type="hidden" name="rno">
+                            <label>Grade <span class="grade"></span></label>
+                            <div class="starrr"></div>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="text" placeholder="Good Movie" />
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger replyRemove">Remove</button>
-                        <button type="button" class="btn btn-warning replyModify">Modify</button>
-                        <button type="button" class="btn btn-primary replySave">Save</button>
-                        <button type="button" class="btn btn-outline-secondary replyClose">Close</button>
+                        <button type="button" class="btn btn-primary reviewSaveBtn">Save</button>
+                        <button type="button" class="btn btn-warning reviewModifyBtn">Modify</button>
+                        <button type="button" class="btn btn-danger reviewRemoveBtn">Remove</button>
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="imageModal modal" tabindex="-2" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Picture</h5>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/js/starrr.js}"></script>
+        <link th:href="@{/css/starrr.css}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
         <script>
             $(document).ready(function (e) {
+
+                var grade = 0;
+                var mno = [[${dto.mno}]];
+
+                $('.starrr').starrr({
+                   rating: grade,
+                   charge: function (e, value) {
+                       if (value) {
+                           console.log(value);
+                           grade = value;
+                       }
+                   }
+                });
+
+                //$('.reviewModal').modal('show');
+
+                var reviewModal = $('.reviewModal');
+                var inputMid = $('input[name="mid"]');
+                var inputText = $('input[name="text"]');
+
+                $('.addReviewBtn').click(function () {
+                   inputMid.val('');
+                   inputText.val('');
+
+                   $('.reviewRemoveBtn, .reviewModifyBtn').hide();
+                   $('.reviewSaveBtn').show();
+
+                   reviewModal.modal('show');
+                });
 
             });
         </script>
