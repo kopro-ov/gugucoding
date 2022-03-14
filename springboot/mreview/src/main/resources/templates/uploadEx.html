@@ -9,6 +9,8 @@
     <input name="uploadFiles" type="file" multiple>
     <button class="uploadBtn">Upload</button>
 
+    <div class="uploadResult"></div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <script>
@@ -31,7 +33,7 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function (result) {
-                    console.log(result);
+                    showUploadImages(result);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(textStatus);
@@ -39,6 +41,15 @@
             });
 
         });
+
+        function showUploadImages(arr) {
+            console.log(arr);
+            var divArea = $('.uploadResult');
+            divArea.html('');
+            for(var i = 0; i < arr.length; i++) {
+                divArea.append("<img src='/display?fileName="+arr[i].imageURL+"'>");
+            }
+        }
     </script>
 
 </body>
