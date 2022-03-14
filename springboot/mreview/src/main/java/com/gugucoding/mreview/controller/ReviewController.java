@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/reivews")
+@RequestMapping("/reviews")
 @Log4j2
 @RequiredArgsConstructor
 public class ReviewController {
@@ -28,6 +28,13 @@ public class ReviewController {
 
         return new ResponseEntity<>(reviewDTOList, HttpStatus.OK);
 
+    }
+    @PostMapping("/{mno}/register")
+    public ResponseEntity<Long> registerReview(@RequestBody ReviewDTO reviewDTO) {
+        log.info("---register---");
+        reviewService.register(reviewDTO);
+
+        return new ResponseEntity<>(reviewDTO.getReviewnum(), HttpStatus.OK);
     }
 
     @PutMapping("/{mno}/{reviewnum}")
