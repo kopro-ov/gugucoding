@@ -22,3 +22,8 @@ spring:
       location: /Users/boyeonko/IdeaProjects/gugucoding/springboot/upload
       max-file-size: 10MB
       max-request-size: 30MB
+
+com:
+  gugucoding:
+    upload:
+      path: /Users/boyeonko/IdeaProjects/gugucoding/springboot/upload
