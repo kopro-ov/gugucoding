@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/bootex?useSSL=false&serverTimezone=UTC&passwordCharacterEncoding=utf-8
+    username: bootuser
+    password: 1111
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+  thymeleaf:
+    cache: false
+
+  servlet:
+    multipart:
+      enabled: true
+      location: /Users/boyeonko/IdeaProjects/gugucoding/upload
+      max-file-size: 10MB
+      max-request-size: 30MB
+
+com:
+  gugucoding:
+    upload:
+      path: /Users/boyeonko/IdeaProjects/gugucoding/upload
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          web: trace
+    com:
+      gugucoding: debug
