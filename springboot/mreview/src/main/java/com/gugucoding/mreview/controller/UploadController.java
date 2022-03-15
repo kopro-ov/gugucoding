@@ -84,7 +84,7 @@ public class UploadController {
     }
 
     @GetMapping("/display")
-    public ResponseEntity<byte[]> getFile(String fileName) {
+    public ResponseEntity<byte[]> getFile(String fileName, String size) {
 
         ResponseEntity<byte[]> result = null;
 
@@ -93,6 +93,13 @@ public class UploadController {
             log.info("fileName: "+srcFileName);
 
             File file = new File(uploadPath + File.separator + srcFileName);
+
+            //size변수 값이 1인 경우 원본 파일로 변경
+            if (size != null && size.equals("1")) {
+                file = new File(file.getParent(), file.getName());
+                log.info("원본사이즈..");
+            }
+
             log.info("file: "+file);
 
             HttpHeaders header = new HttpHeaders();
