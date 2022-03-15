@@ -55,6 +55,7 @@ public class ClubMemberTests {
 
         ClubMember clubMember = result.get();
         System.out.println(clubMember);
+        System.out.println(result.isPresent());
 
     }
 
