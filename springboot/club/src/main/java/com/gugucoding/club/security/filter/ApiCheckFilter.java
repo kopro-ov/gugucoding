@@ -1,5 +1,6 @@
 package com.gugucoding.club.security.filter;
 
+import com.gugucoding.club.security.util.JWTUtil;
 import lombok.extern.log4j.Log4j2;
 import net.minidev.json.JSONObject;
 import netscape.javascript.JSObject;
@@ -19,10 +20,12 @@ public class ApiCheckFilter extends OncePerRequestFilter {
 
     private AntPathMatcher antPathMatcher;
     private String pattern;
+    private JWTUtil jwtUtil;
 
-    public ApiCheckFilter(String pattern) {
+    public ApiCheckFilter(String pattern, JWTUtil jwtUtil) {
         this.antPathMatcher = new AntPathMatcher();
         this.pattern = pattern;
+        this.jwtUtil = jwtUtil;
     }
 
     @Override
@@ -62,11 +65,20 @@ public class ApiCheckFilter extends OncePerRequestFilter {
         boolean result = false;
 
         String authHeader = request.getHeader("Authorization");
-        if (StringUtils.hasText(authHeader)) {
+        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer")) {
+
             log.info("Authorization exist : " + authHeader);
-            if (authHeader.equals("12345678")) {
-                result = true;
+
+            try {
+
+                String email = jwtUtil.validateAndExtract(authHeader.substring(7));
+                log.info("validate result : "+email);
+                result = email.length() > 0;
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
         }
         return result;
     }
