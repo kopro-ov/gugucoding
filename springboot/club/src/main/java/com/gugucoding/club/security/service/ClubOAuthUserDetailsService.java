@@ -3,8 +3,10 @@ package com.gugucoding.club.security.service;
 import com.gugucoding.club.entity.ClubMember;
 import com.gugucoding.club.entity.ClubMemberRole;
 import com.gugucoding.club.repository.ClubMemberRepository;
+import com.gugucoding.club.security.dto.ClubAuthMemberDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -13,6 +15,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -49,10 +52,22 @@ public class ClubOAuthUserDetailsService extends DefaultOAuth2UserService {
 
         log.info("EMAIL : "+email);
 
+        //ClubMember member = saveSocialMember(email);
+        //return oAuth2User;
+
         ClubMember member = saveSocialMember(email);
 
+        ClubAuthMemberDTO clubAuthMember = new ClubAuthMemberDTO(
+                member.getEmail(),
+                member.getPassword(),
+                member.isFromSocial(),
+                member.getRoleSet().stream()
+                        .map(clubMemberRole -> new SimpleGrantedAuthority("ROLE_"+clubMemberRole.toString())).collect(Collectors.toList()),
+                oAuth2User.getAttributes()
+        );
+        clubAuthMember.setName(member.getName());
 
-        return oAuth2User;
+        return clubAuthMember;
 
     }
 
