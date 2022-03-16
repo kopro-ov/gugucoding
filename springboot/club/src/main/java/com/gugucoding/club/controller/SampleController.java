@@ -35,4 +35,14 @@ public class SampleController {
         log.info("admin....");
     }
 
+    @PreAuthorize("#clubAuthMember != null && #clubAuthMember.username eq \"user11@aaa.com\"")
+    @GetMapping("/exOnly")
+    public String exMemberOnly(@AuthenticationPrincipal ClubAuthMemberDTO clubAuthMember) {
+
+        log.info("exMemberOnly..");
+        log.info(clubAuthMember);
+
+        return "/sample/admin";
+    }
+
 }
