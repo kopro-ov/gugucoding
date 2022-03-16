@@ -1,6 +1,7 @@
 package com.gugucoding.club.config;
 
 import com.gugucoding.club.security.filter.ApiCheckFilter;
+import com.gugucoding.club.security.filter.ApiLoginFilter;
 import com.gugucoding.club.security.handler.ClubLoginSuccessHandler;
 import com.gugucoding.club.security.service.ClubUserDetailsService;
 import lombok.extern.log4j.Log4j2;
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe().tokenValiditySeconds(60*60*24*7).userDetailsService(userDetailsService);
 
         http.addFilterBefore(apiCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(apiLoginFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
 
@@ -51,5 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public ApiCheckFilter apiCheckFilter() {
         return new ApiCheckFilter("/notes/**/*");
     }
+
+    @Bean
+    public ApiLoginFilter apiLoginFilter() throws Exception {
+        ApiLoginFilter apiLoginFilter = new ApiLoginFilter("/api/login");
+        apiLoginFilter.setAuthenticationManager(authenticationManager());
+        return apiLoginFilter;
+
+    };
 
 }
