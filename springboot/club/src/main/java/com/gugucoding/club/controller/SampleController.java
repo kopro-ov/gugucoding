@@ -19,7 +19,7 @@ public class SampleController {
         log.info("exAll....");
     }
 
-    @PreAuthorize("hasAnyRole('MEMBER', 'MANAGER', 'ADMIN')")
+    @PreAuthorize("hasAnyRole('USER', 'MANAGER', 'ADMIN')")
     @GetMapping("/member")
     public void member(@AuthenticationPrincipal ClubAuthMemberDTO clubAuthMember) {
         log.info("member....");
