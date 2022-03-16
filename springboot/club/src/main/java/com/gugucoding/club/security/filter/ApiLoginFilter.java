@@ -48,7 +48,7 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
         log.info(authResult.getPrincipal());
 
         //email address
-        String email = ((ClubAuthMemberDTO) authResult.getCredentials()).getUsername();
+        String email = ((ClubAuthMemberDTO) authResult.getPrincipal()).getUsername();
 
         String token = null;
 
