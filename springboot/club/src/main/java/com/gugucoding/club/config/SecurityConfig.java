@@ -1,5 +1,6 @@
 package com.gugucoding.club.config;
 
+import com.gugucoding.club.security.handler.ClubLoginSuccessHandler;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,8 +29,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.logout();
 
-        http.oauth2Login();
+        http.oauth2Login().successHandler(successHandler());
 
+    }
+
+    @Bean
+    public ClubLoginSuccessHandler successHandler() {
+        return new ClubLoginSuccessHandler();
     }
 
 }
