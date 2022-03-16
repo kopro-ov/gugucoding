@@ -2,6 +2,7 @@ package com.gugucoding.club.security.filter;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -25,12 +26,9 @@ public class ApiLoginFilter extends AbstractAuthenticationProcessingFilter {
         log.info("attoemptAuthentication");
 
         String email = request.getParameter("email");
-        String pw = "1111";
+        String pw = request.getParameter("pw");
 
-        if (email == null) {
-            throw new BadCredentialsException("email cannot be null");
-        }
-
-        return null;
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, pw);
+        return getAuthenticationManager().authenticate(authToken);
     }
 }
